@@ -40,7 +40,7 @@ def lstFindOtherTableLinksInTablePage(html):
 
 def boolIsExistTupleInTablePage(html):
     bsObj = BeautifulSoup(html, 'html.parser')
-    # 검색 된 글이 없습니다. 라는 문구가 존재하면 그페이지에는 파일이 없는 것이다.
+    # "검색 된 글이 없습니다." 라는 문구가 존재하지 않으면 그페이지에는 파일이 존재하는 것이다.
     if bsObj.find('td', text=re.compile('검색 된 글이 없습니다.')) is None:
         return True
     else:
@@ -94,8 +94,25 @@ def LstFindFileInHakJaRyoTuplePage(html):
         lstResult.append(dictTemp)
     return lstResult
 
+def boolIsSumittedKuaJea(html):
+    bsObj = BeautifulSoup(html, 'html.parser')
+    # "제출정보보기" 라는 문구가 존재하지 않으면 그페이지에는 교수님의 파일만 존재하는 것이다
+    if bsObj.find('td', text=re.compile('제출정보보기')) is None:
+        return True
+    else:
+        return False
 
+def boolIsExistFile(html):
+    bsObj = BeautifulSoup(html, 'html.parser')
+    # 파일의 title은 Download~로 시작한다
+    if bsObj.find('td', {'title',re.compile('Download')}) is None:
+        return True
+    else:
+        return False
 
+def lstFindFileinKuaJeaInSubmitInfo(html):
+    bsObj = BeautifulSoup(html, 'html.parser')
+    
         
 
 

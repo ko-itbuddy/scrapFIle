@@ -1,4 +1,5 @@
 import urllib.request
+import errLoging
 
 
 
@@ -7,5 +8,9 @@ import urllib.request
 
 
 def downFile(strName, strUrl, strPath):
-    print(strPath+'/'+strName)
-    urllib.request.urlretrieve(strUrl, strPath+'/'+strName)
+    try:
+        print(strPath+'/'+strName)
+        urllib.request.urlretrieve(strUrl, strPath+'/'+strName)
+    except FileExistsError as errMsg:
+        errLoging.writeLog('*************** [in downfile.downFile]***************')
+        errLoging.writeLog('errMsg')

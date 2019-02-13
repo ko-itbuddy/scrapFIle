@@ -64,6 +64,7 @@ try:
 
     #파일저장 위치로 이동
     os.chdir(DownloadPath)
+    '''
     for strLectureRoomLink in lstLectureRoomLinks:
         
         #각 강의실로 이동
@@ -112,8 +113,62 @@ try:
                     for dictFile in pageYuhan.LstFindFileInHakJaRyoTuplePage(tuplePageHtml):
                         # saveDir 위치에 파일 다운
                         downfile.downFile(dictFile['name'],mainUrl+dictFile['url'],strSaveDir)
+    '''
 
+    for strLectureRoomLink in lstLectureRoomLinks:
+        
+        #각 강의실로 이동
+        driver.get(mainUrl+strLectureRoomLink)
+        #bsobj 초기화
+        html = driver.page_source
+        bsObj = BeautifulSoup(html, 'html.parser')
+        #강의실의 이름을 변수에 저장
+        strSubjectName = bsObj.find('p',{'class','subject-list'}).get_text()
+        print(strSubjectName)
+                
 
+        #과 제 찾기
+        KuaJeaUrl = bsObj.find('a', text='과 제')['href']
+
+        #print(mainUrl+KuaJeaUrl)
+        #과제 테이블 페이지로 이동
+        driver.get(mainUrl+KuaJeaUrl)
+        #과제 테이블 페이지 link들을 담을 list 선언
+        lstTableLinks=list()
+        #현재 과제 테이블 페이지 링크 추가
+        lstTableLinks.append(KuaJeaUrl)
+        #추가 과제 테이블 페이지 링크 추가
+        html = driver.page_source
+        lstTableLinks += pageYuhan.lstFindOtherTableLinksInTablePage(html)
+        # 과제 테이블 페이지 링크에서 탐색
+        for link in lstTableLinks:
+            #과제 테이블 페이지로 이동
+            driver.get(mainUrl+link)
+            #과제 테이블 페이지의 html 소스를 변수에 저장
+            tablePageHtml = driver.page_source
+            # 과제 테이블 페이지에 튜플(게시글)이 존재할경우에만 탐색
+            if pageYuhan.boolIsExistTupleInTablePage(tablePageHtml) is True:
+                #강의실 이름의 폴더를 만들고 그하위에 과제 폴더를 만듬
+                os.makedirs(strSubjectName+'/'+'과제')
+                #각 과제 튜플 페이지를 탐색
+                for tuplePage in pageYuhan.lstFindTuplePageLinks(tablePageHtml):
+                    # 과제 튜플 페이지로 이동
+                    driver.get(mainUrl+tuplePage)
+                    # 과제 튜플 페이지의 html 소스를 변수에 저장
+                    tuplePageHtml = driver.page_source
+                    
+
+                    # 제출된 과제인지 확인
+                    if pageYuhan.boolIsSumittedKuaJea is True:
+                        #파일이 존재하는지 확인 
+                        # 파일을 다운로드할 위치지정
+                        strSaveDir = DownloadPath+'/'+strSubjectName + '/과제'
+                        print(strSaveDir)
+                        # 과제 튜플 페이지에서 다운로드 링크들을 찾음
+                        for dictFile in pageYuhan.LstFindFileInKuaJeaTuplePage(tuplePageHtml):
+                            # saveDir 위치에 파일 다운
+                            downfile.downFile(dictFile['name'],mainUrl+dictFile['url'],strSaveDir)
+                    else :
 
 
 
