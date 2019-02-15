@@ -1,2 +1,1 @@
-
-mainUrl = ""
+import inspect

@@ -1,10 +1,12 @@
 import urllib.request
 import logging
-import logging.config
+import inspect
 
 # create logger
-logging.config.fileConfig('logging.conf')
+logging.basicConfig(filename='scrapProject.log',level=logging.DEBUG,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(inspect.getfile(inspect.currentframe()))
+logger.setLevel(logging.DEBUG)
+
 
 
 
@@ -19,7 +21,7 @@ def downHtml(strName, html, strPath):
 
 def downFile(strName, strUrl, strPath):
     try:
-        print(strPath+'/'+strName)
+        #print(strPath+'/'+strName)
         urllib.request.urlretrieve(strUrl, strPath+'/'+strName)
     except FileExistsError as errMsg:
         errLoging.writeLog('*************** [in downfile.downFile]***************')

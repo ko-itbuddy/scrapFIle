@@ -2,11 +2,12 @@ import time
 from bs4 import BeautifulSoup
 import re
 import logging
-import logging.config
+import inspect
 
 # create logger
-logging.config.fileConfig('logging.conf')
+logging.basicConfig(filename='scrapProject.log',level=logging.DEBUG,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(inspect.getfile(inspect.currentframe()))
+logger.setLevel(logging.DEBUG)
 
 
 
@@ -133,7 +134,7 @@ def lstFindFileinKuaJeaInSubmitInfo(html):
     bsObj = BeautifulSoup(html, 'html.parser')
     # 기본정보는 파일을 포함한 링크와 함께 해당 테이블 태그에 속해 있다.
     tmpBsObj = bsObj.find('th', text='과제명').parent.parent
-    #print(tmpBsObj)
+    ##print(tmpBsObj)
     
     lstResult = list()
     dictProfTemp = dict()
@@ -142,21 +143,21 @@ def lstFindFileinKuaJeaInSubmitInfo(html):
     strTmpFileLink = str()
 
     for element in tmpBsObj.findAll('div',{'onclick':re.compile('fileDownload')}):
-        #print(element)
+        ##print(element)
         dictProfTemp['nameProf'] = element.get_text()
         dictProfTemp['urlProf'] = '/'+__decodeFileDownLink(element['onclick'])
         lstResult.append(dictProfTemp)
 
     
     tmpBsObj = bsObj.find('th', text='과제설명').parent.parent
-    #print(tmpBsObj)
+    ##print(tmpBsObj)
 
     for element in tmpBsObj.findAll('div',{'onclick':re.compile('fileDownload')}):
-        #print(element)
+        ##print(element)
         dictStdTemp['nameStd'] = element.get_text()
         dictStdTemp['urlStd'] = '/'+__decodeFileDownLink(element['onclick'])
         lstResult.append(dictStdTemp)
-    #print(lstResult)
+    ##print(lstResult)
     return lstResult
     
 #lstFindFileInUnsubmittedKuaJeaPage same as
