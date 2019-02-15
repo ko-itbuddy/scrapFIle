@@ -3,6 +3,11 @@ import errLoging
 
 
 
+def downHtml(strName, html, strPath):
+    completeName = strPath+'/'+strName
+    with open(completeName, "w" ,encoding='utf-8') as file:
+        file.write(html)
+    
 
 
 

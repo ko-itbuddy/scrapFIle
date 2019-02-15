@@ -8,7 +8,7 @@ import errLoging
 import os
 import downfile
 
-sleepTime = 1
+sleepTime = 0
 
 
 
@@ -62,9 +62,12 @@ driver.get('https://lms.yuhan.ac.kr/Study.do?cmd=viewStudyMyClassroom')
 html = driver.page_source
 lstLectureRoomLinks=pageYuhan.lstFindLectureRoomInViewStudyMyClassroom(html)
 
+# 지정 다운로드 위치에 폴더가 존재하지 않으면 생성
+if os.path.isdir(DownloadPath) is False:
+    os.makedirs(DownloadPath)
 #파일저장 위치로 이동
 os.chdir(DownloadPath)
-'''
+
 for strLectureRoomLink in lstLectureRoomLinks:
     
     #각 강의실로 이동
@@ -99,25 +102,28 @@ for strLectureRoomLink in lstLectureRoomLinks:
         #학습자료 테이블 페이지의 html 소스를 변수에 저장
         tablePageHtml = driver.page_source
         # 학습자료 테이블 페이지에 튜플(게시글)이 존재할경우에만 탐색
-        if pageYuhan.boolIsExistTupleInTablePage(tablePageHtml) is True:
+        if pageYuhan.boolIsExistTupleInHakJaRyoTablePage(tablePageHtml) is True:
             #강의실 이름의 폴더를 만들고 그하위에 학습자료 폴더를 만듬
             if os.path.isdir(strSubjectName+'/'+'학습자료') is False:
                 os.makedirs(strSubjectName+'/'+'학습자료')
             #각 학습자료 튜플 페이지를 탐색
             for tuplePage in pageYuhan.lstFindTuplePageLinks(tablePageHtml):
                 # 학습자료 튜플 페이지로 이동
-                driver.get(mainUrl+tuplePage)
+                driver.get(mainUrl+tuplePage['url'])
                 # 학습자료 튜플 페이지의 html 소스를 변수에 저장
                 tuplePageHtml = driver.page_source
                 # 파일을 다운로드할 위치지정
                 strSaveDir = DownloadPath+'/'+strSubjectName + '/학습자료'
+                #페이지 html을 저장
+                htmlName = pageYuhan.changeFileNameForAll('_설명.html',tuplePage['no'])
+                downfile.downHtml(htmlName,tuplePageHtml,strSaveDir)
                 print(strSaveDir)
                 # 학습자료 튜플 페이지에서 다운로드 링크들을 찾음
-                for dictFile in pageYuhan.lstFindFileInHakJaRyoTuplePage(tuplePageHtml):
+                for dictFile in pageYuhan.changeFileNameForAll(pageYuhan.lstFindFileInHakJaRyoTuplePage(tuplePageHtml), tuplePage['no']):
                     # saveDir 위치에 파일 다운
                     downfile.downFile(dictFile['name'],mainUrl+dictFile['url'],strSaveDir)
 
-'''
+
 
 # 과제 다운
 
@@ -131,6 +137,7 @@ for strLectureRoomLink in lstLectureRoomLinks:
     bsObj = BeautifulSoup(html, 'html.parser')
     #강의실의 이름을 변수에 저장
     strSubjectName = bsObj.find('p',{'class','subject-list'}).get_text()
+    print('**************************')
     print(strSubjectName)
             
 
@@ -158,23 +165,26 @@ for strLectureRoomLink in lstLectureRoomLinks:
         #과제 테이블 페이지의 html 소스를 변수에 저장
         tablePageHtml = driver.page_source
         # 과제 테이블 페이지에 튜플(게시글)이 존재할경우에만 탐색
-        if pageYuhan.boolIsExistTupleInTablePage(tablePageHtml) is True:
+        if pageYuhan.boolIsExistTupleInKuaJeaTablePage(tablePageHtml) is True:
+            
             #강의실 이름의 폴더를 만들고 그하위에 과제 폴더를 만듬
             if os.path.isdir(strSubjectName+'/'+'과제') is False:
                 os.makedirs(strSubjectName+'/'+'과제')
                 print('디렉토리 생성 : '+ strSubjectName+'/'+'과제')
             #각 과제 튜플 페이지를 탐색
+            
             for tuplePage in pageYuhan.lstFindTuplePageLinks(tablePageHtml):
                 # 과제 튜플 페이지로 이동
-                driver.get(mainUrl+tuplePage)
-                print('현재 URL : '+ mainUrl+tuplePage)
+                driver.get(mainUrl + tuplePage['url'])
+                print('현재 URL : '+ mainUrl+tuplePage['url'])
                 #####################
                 time.sleep(sleepTime)
                 # 과제 튜플 페이지의 html 소스를 변수에 저장
                 tuplePageHtml = driver.page_source
                 
-                
+                #print(tuplePageHtml)
                 # 제출된 과제인지 확인
+                #print(pageYuhan.boolIsSumittedKuaJea(tuplePageHtml))
                 if pageYuhan.boolIsSumittedKuaJea(tuplePageHtml) is True:
                     print('제출한 과제입니다.')
                     tuplePageBsObj = BeautifulSoup(tuplePageHtml, 'html.parser')
@@ -187,16 +197,23 @@ for strLectureRoomLink in lstLectureRoomLinks:
                     #####################
                     time.sleep(sleepTime)
                     submitInfoPageHtml = driver.page_source
+
+
+                    # 파일을 다운로드할 위치지정
+                    strSaveDir = DownloadPath+'/'+strSubjectName + '/과제'
+                    #페이지 html을 저장
+                    htmlName = pageYuhan.changeFileNameForAll('_설명.html',tuplePage['no'])
+                    downfile.downHtml(htmlName,submitInfoPageHtml,strSaveDir)
+
                     #파일이 존재하는지 확인 
                     if pageYuhan.boolIsExistFile(submitInfoPageHtml) is True:
                         print('현재 페이지에는 파일이 존재합니다.')
-                        # 파일을 다운로드할 위치지정
-                        strSaveDir = DownloadPath+'/'+strSubjectName + '/과제'
-                        print('파일 저장 위치 : '+strSaveDir)
-                        # 과제 튜플 페이지에서 다운로드 링크들을 찾음
                         
-                        for dictFile in pageYuhan.lstFindFileinKuaJeaInSubmitInfo(submitInfoPageHtml):
+                        
+                        # 과제 튜플 페이지에서 다운로드 링크들을 찾음
+                        for dictFile in pageYuhan.changeFileNameForAll(pageYuhan.lstFindFileinKuaJeaInSubmitInfo(submitInfoPageHtml), tuplePage['no']):
                             # saveDir 위치에 파일 다운
+                            
                             if 'nameProf' in dictFile:
                                 downfile.downFile(dictFile['nameProf'],mainUrl+dictFile['urlProf'],strSaveDir)
                                 print('저장 파일명 : '+ dictFile['nameProf'])
@@ -205,25 +222,36 @@ for strLectureRoomLink in lstLectureRoomLinks:
                                 downfile.downFile(dictFile['nameStd'],mainUrl+dictFile['urlStd'],strSaveDir)
                                 print('저장 파일명 : '+ dictFile['nameStd'])
                                 print('저장 파일의 URL : '+ dictFile['urlStd'])
-                            
+                         
                             
                 else :
                     # 미제출된 과제의 경우 처리
                     print('미제출한 과제입니다.')
-                    if pageYuhan.boolIsExistFile(submitInfoPageHtml) is True:
-                        # 파일을 다운로드할 위치지정
-                        strSaveDir = DownloadPath+'/'+strSubjectName + '/과제'
-                        print(strSaveDir)
+
+                    # 파일을 다운로드할 위치지정
+                    strSaveDir = DownloadPath+'/'+strSubjectName + '/과제'
+                    #페이지 html을 저장
+                    htmlName = pageYuhan.changeFileNameForAll('_설명.html',tuplePage['no'])
+                    downfile.downHtml(htmlName,tuplePageHtml,strSaveDir)
+                    #####################
+                    time.sleep(sleepTime)
+
+                    if pageYuhan.boolIsExistFile(tuplePageHtml) is True:
+                        print('현재 페이지에는 파일이 존재합니다.')
+                        
+                        print('파일 저장 위치 : '+strSaveDir)
                         # 과제 튜플 페이지에서 다운로드 링크들을 찾음
-                        for dictFile in pageYuhan.lstFindFileinKuaJeaInSubmitInfo(submitInfoPageHtml):
+                        
+                        for dictFile in pageYuhan.changeFileNameForAll(pageYuhan.lstFindFileInUnsubmittedKuaJeaPage(tuplePageHtml), tuplePage['no']):
                             # saveDir 위치에 파일 다운
-                            if 'nameProf' in dictFile:
-                                downfile.downFile(dictFile['nameProf'],mainUrl+dictFile['urlProf'],strSaveDir)
-                                print(dictFile['nameProf']+'\n'+dictFile['urlProf'])
+                            if 'name' in dictFile:
+                                downfile.downFile(dictFile['name'],mainUrl+dictFile['url'],strSaveDir)
+                                print('저장 파일명 : '+ dictFile['name'])
+                                print('저장 파일의 URL : '+ dictFile['url'])
                             #downfile.downFile(dictFile['nameStd'],mainUrl+dictFile['urlStd'],strSaveDir)
+                print('--------------------------------------------------')
 
-
-        
+    
         #time.sleep(5)
         #kuaJeaUrl = bsObj.find('a', text='과 제')['href']
         #print(mainUrl+kuaJeaUrl)
