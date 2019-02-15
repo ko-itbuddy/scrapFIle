@@ -1,0 +1,18 @@
+DEBUG:simple_example:debug message
+INFO:simple_example:info message
+WARNING:simple_example:warn message
+ERROR:simple_example:error message
+CRITICAL:simple_example:critical message
+ERROR:simple_example:error message
+DEBUG:simple_example:debug message
+INFO:simple_example:info message
+WARNING:simple_example:warn message
+ERROR:simple_example:error message
+CRITICAL:simple_example:critical message
+ERROR:simple_example:error message
+2019-02-16 02:51:26,673 - simple_example - DEBUG - debug message
+2019-02-16 02:51:26,673 - simple_example - INFO - info message
+2019-02-16 02:51:26,673 - simple_example - WARNING - warn message
+2019-02-16 02:51:26,673 - simple_example - ERROR - error message
+2019-02-16 02:51:26,673 - simple_example - CRITICAL - critical message
+2019-02-16 02:51:26,674 - simple_example - ERROR - error message

@@ -1,7 +1,12 @@
 import time
 from bs4 import BeautifulSoup
 import re
-import errLoging
+import logging
+import logging.config
+
+# create logger
+logging.config.fileConfig('logging.conf')
+logger = logging.getLogger(inspect.getfile(inspect.currentframe()))
 
 
 

@@ -1,0 +1,10 @@
+2019-02-16 02:56:43,003 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:10953/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": []}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": []}}}
+2019-02-16 02:56:43,004 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:10953
+2019-02-16 02:56:45,185 - urllib3.connectionpool - DEBUG - http://127.0.0.1:10953 "POST /session HTTP/1.1" 200 998
+2019-02-16 02:56:45,186 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2019-02-16 02:56:45,186 - __main__ - CRITICAL - name 'Loging' is not defined
+2019-02-16 02:56:53,931 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:10974/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": []}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": []}}}
+2019-02-16 02:56:53,931 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:10974
+2019-02-16 02:56:56,029 - urllib3.connectionpool - DEBUG - http://127.0.0.1:10974 "POST /session HTTP/1.1" 200 998
+2019-02-16 02:56:56,029 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2019-02-16 02:56:56,029 - __main__ - CRITICAL - name 'Loging' is not defined

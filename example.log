@@ -1,0 +1,9 @@
+DEBUG:root:This message should go to the log file
+INFO:root:So should this
+WARNING:root:And this, too
+DEBUG:simple_example:debug message
+INFO:simple_example:info message
+WARNING:simple_example:warn message
+ERROR:simple_example:error message
+CRITICAL:simple_example:critical message
+ERROR:simple_example:error message
