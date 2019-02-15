@@ -81,7 +81,7 @@ def __decodeFileDownLink(string):
 
     return strResult
 
-def LstFindFileInHakJaRyoTuplePage(html):
+def lstFindFileInHakJaRyoTuplePage(html):
     bsObj = BeautifulSoup(html, 'html.parser')
     lstResult = list()
     dictTemp = dict()
@@ -97,7 +97,7 @@ def LstFindFileInHakJaRyoTuplePage(html):
 def boolIsSumittedKuaJea(html):
     bsObj = BeautifulSoup(html, 'html.parser')
     # "제출정보보기" 라는 문구가 존재하지 않으면 그페이지에는 교수님의 파일만 존재하는 것이다
-    if bsObj.find('td', text=re.compile('제출정보보기')) is None:
+    if bsObj.find('td', text='제출정보보기')) is None:
         return True
     else:
         return False
@@ -112,6 +112,32 @@ def boolIsExistFile(html):
 
 def lstFindFileinKuaJeaInSubmitInfo(html):
     bsObj = BeautifulSoup(html, 'html.parser')
+    # 기본정보는 파일을 포함한 링크와 함께 해당 테이블 태그에 속해 있다.
+    tmpBsObj = bsObj.find('th', text='과제명').parent.parent
+    #print(tmpBsObj)
+    
+    lstResult = list()
+    dictTemp = dict()
+    strTmpFileName = str()
+    strTmpFileLink = str()
+
+    for element in tmpBsObj.findAll('div',{'onclick':re.compile('fileDownload')}):
+        #print(element)
+        dictTemp['nameProf'] = 'professor - ' + element.get_text()
+        dictTemp['urlProf'] = '/'+__decodeFileDownLink(element['onclick'])
+        lstResult.append(dictTemp)
+
+    
+    tmpBsObj = bsObj.find('th', text='과제설명').parent.parent
+    #print(tmpBsObj)
+
+    for element in tmpBsObj.findAll('div',{'onclick':re.compile('fileDownload')}):
+        #print(element)
+        dictTemp['nameStd'] = 'strudent - ' + element.get_text()
+        dictTemp['urlStd'] = '/'+__decodeFileDownLink(element['onclick'])
+        lstResult.append(dictTemp)
+    #print(lstResult)
+    return lstResult
     
         
 
