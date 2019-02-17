@@ -132,10 +132,7 @@ class Ui_Dialog_scrap(object):
         self.label_subDirName.setText(_translate("Dialog_scrap", "하위 폴더 이름"))
         self.pushButton_saveLog.setText(_translate("Dialog_scrap", "Save Log"))
 
-    @QtCore.pyqtSlot()
-    def on_pushButton_start_clicked(self):
-        dirName = QtWidgets.QFileDialog.getExistingDirectory(None, '다운로드 경로 지정', './')
-        self.lineEdit_selectedDir.setText(dirName)      
+    
 
 if __name__ == "__main__":
     import sys
