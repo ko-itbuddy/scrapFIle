@@ -1,0 +1,283 @@
+<html><head><script language="javascript">
+
+	var commonResultMessage = "null";
+	if(commonResultMessage=="" || commonResultMessage=="null") {
+		commonResultMessage = "null";
+	}
+	
+	var localeKey = "ko";
+</script>
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>내용 보기</title>
+<style type="text/css">
+@import url(/lmsdata/template1/ko/css/lms.css);
+</style>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/common.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/common_conf.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/common_util.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/common_button.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/message_box.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/common_iframe.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/FileDownload.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/jquery-1.9.1.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/common2.js"></script>
+
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/objEmbed.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/popupbox.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/sns_send.js"></script>
+<script type="text/javascript">
+	/**
+	 * 페이지 초기화
+	 */
+	function initPage() {
+		displayMessage();
+	}
+
+	/**
+	 * 게시판 내용 삭제
+	 */
+	function deleteBoardContents(url) {
+		var st = confirm("내용을 삭제하시겠습니까?\n주의: 내용을 삭제하면 포함된 답변글 및 메모도 모두 삭제됩니다.");
+		if (st) {
+			document.location.href = url;
+		}
+	}
+
+	
+	/**
+	 * 코멘트 쓰기
+	 */
+	function addBoardComment() {
+		var f = document.boardForm;
+		if(!validate(f)) return;
+	}
+	
+	
+	/**
+	 * 코멘트 삭제
+	 */
+	function deleteBoardComment(url) {
+		var st = confirm("메모를 삭제하시겠습니까?");
+		if (st == true) {
+			document.location.href = url;
+		}
+	}
+	
+	
+	/**
+	 * 이모티콘 표시
+	 */
+	function addEmoticonItem(fileName) {
+		var str = "<div style=\"float:left;padding:3px;cursor:pointer\""
+				+ " onClick=\"onSelectEmoticon(this, '"+fileName+"')\">"
+				+ "<img src='"+emoticonImgPath+fileName+"' alt=''>"
+				+ "</div>";
+
+		document.write(str);
+	}
+	
+	
+	/**
+	 * 이모티콘 선택
+	 */
+	var curEmoticon = null;
+	function onSelectEmoticon(obj, fileName) {
+		var f = document.boardForm;
+		
+		if (curEmoticon != null) {
+			offSelectColor(curEmoticon);
+		}
+		onSelectColor(obj);
+		curEmoticon = obj;
+		
+		f["boardCommentDTO.emoticon"].value = fileName;
+	}
+</script>
+
+</head>
+
+<body class="iframebody" onload="initPage()" marginwidth="0" marginheight="0">
+<script type="text/javascript">
+	/**
+	 * 스크랩
+	 */
+	var getPostPopup = PopupBox("포스트 담기", "", "", "width=390,height=360,style=normal,bgcolor=white,modal=yes,resizable=yes,move=yes,titlebar=yes,position=center");
+	function goScrap() {
+		var f = document.boardForm;
+		var param1 = "BOAD_181001093058992c1f79";
+		var param  = "course";
+		if(param == "course") {
+			param = "강의실 > ";
+		}else if(param == "system") {
+			param = "학습도우미 > ";
+		}else if(param == "dept") {
+			param = "학과 > ";
+		}else if(param == "project") {
+			param = "프로젝트 > ";
+		}
+		var param2 = "학습자료";
+		var courseId = "2018203070148723";
+		var st = confirm("내 지식로그에 담으시겠습니까?");
+		if (st == true) {
+			var s_url = "/Blog.do?cmd=getOtherPostForm";
+			var s_val = "";
+			if(param == "강의실 > ") {
+				s_val = "&scrapKey="+param1+"&scrapLocation="+getUrlEncode(param2)+"&scrapLocationCourse="+courseId;
+			}else {
+				s_val = "&scrapKey="+param1+"&scrapLocation="+getUrlEncode(param)+getUrlEncode(param2)+"&scrapLocationCourse="+courseId;
+			}
+			var mframe = "<iframe name='userFrame' width='100%' height='100%' frameborder='0' scrolling='no' src='"+s_url+s_val+"'></iframe>";
+			
+			getPostPopup.clear();
+			getPostPopup.addContents(mframe);
+			showPopupBox(getPostPopup);
+		}
+	}
+</script><div id="POPUPBOX1" style="display: none; position: absolute;"><table border="0" cellspacing="0" cellpadding="0"><tbody><tr><td width="5" background="https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/popupbox_title_left.gif"><img src="https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/blank.gif" width="5" height="1"></td><td height="22" background="https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/popupbox_title_center.gif">  <table id="POPUPBOX1_title" border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed;width:390px;cursor:default;">  <tbody><tr>    <td id="POPUPBOX1_titleText" style="height:22px;padding-top:3px;font-size:9pt;font-family:굴림;      color:white;font-weight:bold;vertical-align:middle;overflow:hidden;" nowrap="" onmousedown="startPopupBoxReset(this, 'POPUPBOX1', 'move')">포스트 담기</td>    <td align="right" width="20"><img src="https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/win_close_off.gif" onmouseover="changeImage(this, &quot;https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/win_close_on.gif&quot;);" onmouseout="changeImage(this, &quot;https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/win_close_off.gif&quot;);" border="0" onclick="closePopupBox(&quot;POPUPBOX1&quot;)"></td>  </tr>  </tbody></table></td><td width="5" background="https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/popupbox_title_right.gif"><img src="https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/blank.gif" width="5" height="1"></td></tr><tr>  <td width="5" background="https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/popupbox_line_left.gif" style="cursor:w-resize;" onmousedown="startPopupBoxReset(this, &quot;POPUPBOX1&quot;)">  </td>  <td>    <div id="POPUPBOX1_contents" style="width:390px;height:360px;      font-size:9pt;font-family:굴림;      background-color:white;overflow:auto;"></div>  </td>  <td width="5" background="https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/popupbox_line_right.gif" style="cursor:e-resize;" onmousedown="startPopupBoxReset(this, &quot;POPUPBOX1&quot;)">  </td></tr><tr>  <td width="5" background="https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/popupbox_bottom_left.gif" style="cursor:sw-resize;" onmousedown="startPopupBoxReset(this, &quot;POPUPBOX1&quot;)">  </td>  <td height="8" style="cursor:s-resize;" background="https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/popupbox_bottom_center.gif" onmousedown="startPopupBoxReset(this, &quot;POPUPBOX1&quot;)">  </td>  <td width="5" background="https://lms.yuhan.ac.kr/lmsdata/img_common/popupbox/set1/popupbox_bottom_right.gif" style="cursor:se-resize" ;'="" onmousedown="startPopupBoxReset(this, &quot;POPUPBOX1&quot;)">  </td></tr></tbody></table></div><div id="popupBackBox" style="position: absolute; top: 0px; left: 0px; background: none; display: none;"></div><div id="popupMoveBox" style="position: absolute; border: 3px solid black; background: white; display: none;"></div><div id="popupMoveBoxHide" style="position: absolute; background: white; display: none;"></div>
+
+<!-- 페이지 Body 시작 -->
+<div class="work-body">
+
+<!-- 페이지 상단 -->
+<div class="work-head">
+	<!-- 타이틀 -->
+	<div class="title">
+		학습자료
+	</div>
+	
+	<!-- 상단 코멘트 -->
+	<div class="comment">
+	</div>
+	
+	<!-- 상단 버튼 -->
+	<div class="button">
+		
+				
+			
+			<a href="javascript:sendFacebook('프로젝트','http://lms.yuhan.ac.kr/Board.do?cmd=viewSnsBoard&amp;key=Qk9BRF8xODEwMDEwOTMwNTg5OTJjMWY3OQ==');"><img src="/lmsdata/template1/ko/common/facebook.gif" alt="" title="FaceBook" align="absmiddle" border="0"></a>
+			<a href="javascript:sendTwitter('프로젝트','http://lms.yuhan.ac.kr/Board.do?cmd=viewSnsBoard&amp;key=Qk9BRF8xODEwMDEwOTMwNTg5OTJjMWY3OQ==');"><img src="/lmsdata/template1/ko/common/twitter.gif" alt="" title="twitter" align="absmiddle" border="0"></a>
+			<a href="javascript:sendM2Day('프로젝트','http://lms.yuhan.ac.kr/Board.do?cmd=viewSnsBoard&amp;key=Qk9BRF8xODEwMDEwOTMwNTg5OTJjMWY3OQ==');"><img src="/lmsdata/template1/ko/common/me2day.gif" alt="" title="me2day" align="absmiddle" border="0"></a>
+			<a href="javascript:sendDaum('프로젝트','http://lms.yuhan.ac.kr/Board.do?cmd=viewSnsBoard&amp;key=Qk9BRF8xODEwMDEwOTMwNTg5OTJjMWY3OQ==');"><img src="/lmsdata/template1/ko/common/yozm.gif" alt="" title="yozm" align="absmiddle" border="0"></a>				
+	</div>
+	<div style="clear:both"></div>
+</div>
+
+
+<!-- 내용 테이블 -->
+<table cellspacing="0" cellpadding="0" class="view-table">
+	<caption>학습자료-내용</caption>
+	<tbody><tr>
+		<th class="nodisp">내용</th>
+	</tr>
+	<tr>
+		<td class="title-td">
+			
+			<div class="title">
+				
+					
+				
+				프로젝트
+			</div>
+
+			<span style="float:left">
+				
+				윤정미
+				
+			</span>
+			
+			<span style="float:right">
+				
+				2018-10-01 09:30:58
+				&nbsp;|&nbsp;
+				
+				
+				조회 217
+
+				
+				
+				
+				
+				
+			</span>
+			
+			
+			
+				
+					<div class="file">
+						<div onclick="fileDownload('GSeshop*EC*87*BC*ED*95*91*EB*AA*B0*EC*9D*98*EB*8D*B0*EC*9D*B4*ED*84*B0*EB*B2*A0*EC*9D*B4*EC*8A*A4*EC*84*A4*EA*B3*84*EC*99*80*EA*B5*AC*EC*B6*95.hwp','COMF_181001093057992c1f77.hwp','/business/board/2018203070148723-PDS/');" style="cursor: pointer; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'" title="Download: GSeshop쇼핑몰의데이터베이스설계와구축.hwp">GSeshop쇼핑몰의데이터베이스설계와구축.hwp</div>
+
+					</div>
+				
+					<div class="file">
+						<div onclick="fileDownload('*EC*9D*B8*ED*84*B0*EB*84*B7*20*EC*98*81*ED*99*94*EC*98*88*EB*A7*A4*EC*8B*9C*EC*8A*A4*ED*85*9C.hwp','COMF_181001093057992c1f78.hwp','/business/board/2018203070148723-PDS/');" style="cursor: pointer; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'" title="Download: 인터넷 영화예매시스템.hwp">인터넷 영화예매시스템.hwp</div>
+
+					</div>
+				
+			
+		</td>
+	</tr>
+    
+	<tr>
+		
+		<td class="content" style="height:150px;">
+			
+			
+			
+			
+				1. 프로젝트 계획서 제출 (10월 16일 13시30분까지)<br>&nbsp;&nbsp; - 프로젝트 개요서<br>&nbsp;&nbsp; - 업무 기능도<br>&nbsp;&nbsp; - 단위업무 기술서<br>&nbsp;&nbsp; - 업무 흐름도<br>&nbsp;<br>2. 프로젝트 중간보고서 제출(11월 13일 13시30분까지)<br>&nbsp;&nbsp; - 프로젝트 개요서<br>&nbsp;&nbsp; - 업무 기능도<br>&nbsp;&nbsp; - 단위업무 기술서<br>&nbsp;&nbsp; - 업무 흐름도<br>&nbsp;&nbsp; - 업무문서 리스트<br>&nbsp;&nbsp; - 논리적 데이터모델<br>&nbsp;<br>3. 프로젝트 발표 자료 제출(11월 25일 23시30분까지)<br>&nbsp;<br>4. 프로젝트 결과보고서 제출(12월4일 13시30분까지)<br>
+			
+		</td>
+	</tr>
+</tbody></table>
+
+
+<!-- 코멘트 시작 -->
+
+<!-- 코멘트 끝 -->
+
+<div class="work-bottom">
+	<!-- 하단 버튼 -->
+	<div class="button">
+		
+		
+	
+		
+			
+		
+		
+			
+			<a class="btn-link" href="Blog.do?cmd=getOtherPostForm&amp;scrapKey=BOAD_181001093058992c1f79&amp;scrapLocation=*ED*95*99*EC*8A*B5*EC*9E*90*EB*A3*8C&amp;scrapLocationCourse=2018203070148723" target="_blank" onclick="goScrap();return false;;return false;"><span class="btn1"><span class="left"></span><span class="center"><span>스크랩</span></span><span class="right"></span></span></a>
+		
+		&nbsp;&nbsp;
+
+		
+		
+		
+		
+		
+								
+			<a class="btn-link" href="Board.do?cmd=viewBoardContents&amp;boardInfoDTO.boardInfoId=2018203070148723-PDS&amp;gubun=V&amp;curPage=1&amp;boardContentsDTO.boardContentsId=BOAD_181008092440992c3a44&amp;boardContentsDTO.contentsNo=2"><span class="btn1"><span class="left"></span><span class="center"><span>이 전</span></span><span class="right"></span></span></a>
+			<span class="btn1"><span class="left"></span><span class="center-disable"><span>다 음</span></span><span class="right"></span></span>
+		
+			 
+		<!-- 목록 -->
+		<a class="btn-link" href="Board.do?cmd=viewBoardContentsList&amp;boardInfoDTO.boardInfoId=2018203070148723-PDS&amp;curPage=1"><span class="btn1"><span class="left"></span><span class="center"><span>목 록</span></span><span class="right"></span></span></a>
+	</div>
+	<div style="clear:both"></div>
+</div>
+
+</div>
+<!-- 페이지 Body 끝 -->
+<iframe name="hiddenFrame" width="0" height="0" frameborder="0" title="파일다운로드프레임"></iframe>
+
+</body></html>

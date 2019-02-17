@@ -74,6 +74,7 @@ def lstFindTuplePageLinks(html):
         dictTemp = dict()
         dictTemp['no'] = link.previous_sibling.previous_sibling.get_text()
         dictTemp['url'] = '/'+link.a['href']
+        dictTemp['name'] = link.a.get_text()
         lstResult.append(dictTemp)
     return lstResult
 
@@ -92,13 +93,13 @@ def __decodeFileDownLink(string):
 def lstFindFileInHakJaRyoTuplePage(html):
     bsObj = BeautifulSoup(html, 'html.parser')
     lstResult = list()
-    dictTemp = dict()
     strTmpFileName = str()
     strTmpFileLink = str()
     bsObj.find()
-    for element in bsObj.findAll('div',{'class':'file'}):
-        dictTemp['name'] = element.div.get_text()
-        dictTemp['url'] = '/'+__decodeFileDownLink(element.div['onclick'])
+    for element in bsObj.findAll('div',{'title':re.compile('Download')}):
+        dictTemp = dict()
+        dictTemp['name'] = element.get_text()
+        dictTemp['url'] = '/'+__decodeFileDownLink(element['onclick'])
         lstResult.append(dictTemp)
     return lstResult
 
@@ -194,6 +195,7 @@ def changeFileNameForAll(obj,no):
         lstTemp = obj.split('.')
         return  no + '_' + lstTemp[0] + '.' + lstTemp[1]
     
+
 
 
 exLstFileOne = [{'name':'abc.hwp'}, {'nameProf':'def.hwp'},{'nameStd':'ghi.hwp'}]
