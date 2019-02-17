@@ -7,28 +7,45 @@ from dialogForm import Ui_Dialog_scrap
 
 class AppWindow(Ui_Dialog_scrap):
     def initAll(self):
-        self.initLineEdit_selectedDir()
-        QtCore.QObject.connect(self.lineEdit, QtCore.SIGNAL("textChanged(QString)"), self.)
+        #init
+        self.init()
+        #actions
+        self.actions()
 
         #self.actionOntoolButton_selectDir()
+#init
+    def init(self):
+        #progressBar
+        #lineEdit_selectedDir
+        self.lineEdit_selectedDir.setText(os.getcwd())
+        #lineEdit_id
+        #lineEdit_pwd
+        #groupBox_downType
+        #radioButton_mkHakKuaDirs
+        #radioButton_justName
+        #label_selectedDir
+        #label_id
+        #label_pwd
+        #pushButton_start
+        #pushButton_selectDir
+        #groupBox_mkSubDir
+        #radioButton_mkSubDir
+        #radioButton_notMkSubdir
+        #lineEdit_subDirName
+        self.lineEdit_subDirName.setReadOnly(True)
+        #label_subDirName
+        #textEdit_log
+        #pushButton_saveLog
         
-    def initLineEdit_selectedDir(self):
-        print(os.getcwd())
-        dirName = os.getcwd()
-        self.lineEdit_selectedDir.setText(dirName)
+#actions      
+    def actions(self):
+        #pushButton_selectDir.clicked
+        self.pushButton_selectDir.clicked.connect(self.showDirExprolerDialog)
         
-        
-    def actionOntoolButton_selectDir(self):
-        self.pushButton_selectDir.clicked.connect(self.showDirDialog)
     
-    @QtCore.pyqtSlot(unicode)
-    def on_pushButton_start_clicked():
-        dirName = QtWidgets.QFileDialog.getExistingDirectory(None, '다운로드 경로 지정', './')
-        self.lineEdit_selectedDir.setText(dirName)      
    
-
-    def showDirDialog(self):
-        #dirName = QtWidgets.QFileDialog.getExistingDirectory(self, '다운로드 경로 지정', './')
+#activate 
+    def showDirExprolerDialog(self):
         dirName = QtWidgets.QFileDialog.getExistingDirectory(None, '다운로드 경로 지정', './')
         self.lineEdit_selectedDir.setText(dirName)
 
