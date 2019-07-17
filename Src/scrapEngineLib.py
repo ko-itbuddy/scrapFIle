@@ -1,15 +1,6 @@
 import time
 from bs4 import BeautifulSoup
 import re
-import logging
-import inspect
-from dialogConnector import AppWindow
-
-# create logger
-logging.basicConfig(filename='scrapProject.log',level=logging.DEBUG,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(inspect.getfile(inspect.currentframe()))
-logger.setLevel(logging.DEBUG)
-
 
 
 

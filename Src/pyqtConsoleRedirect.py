@@ -1,5 +1,5 @@
 import sys
-from PyQt5 import QtGui,QtCore, QtWidgets
+from PyQt5 import QtWidgets,QtCore, QtWidgets
 
 class Ui_Dialog_scrap(object):
     def setupUi(self, Dialog_scrap):
@@ -21,21 +21,19 @@ class Ui_Dialog_scrap(object):
 
     def initUI(self):
         # Layout are better for placing widgets
-        layout = QtGui.QHBoxLayout()
-        self.runButton = QtGui.QPushButton('Run')
+        layout = QtWidgets.QHBoxLayout()
+        self.runButton = QtWidgets.QPushButton('Run')
         self.runButton.clicked.connect(self.callProgram)
 
-        self.output = QtGui.QTextEdit()
+        self.output = QtWidgets.QTextEdit()
 
         layout.addWidget(self.output)
         layout.addWidget(self.runButton)
 
-        centralWidget = QtGui.QWidget()
-        centralWidget.setLayout(layout)
-        self.setCentralWidget(centralWidget)
+        
 
         # QProcess object for external app
-        self.process = QtCore.QProcess(self)
+        self.process = QtCore.QProcess()
         # QProcess emits `readyRead` when there is data to be read
         self.process.readyRead.connect(self.dataReady)
 

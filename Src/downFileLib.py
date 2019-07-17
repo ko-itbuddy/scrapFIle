@@ -1,14 +1,6 @@
 import urllib.request
-import logging
-import inspect
-import re
 import os
 
-
-# create logger
-logging.basicConfig(filename='scrapProject.log',level=logging.DEBUG,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(inspect.getfile(inspect.currentframe()))
-logger.setLevel(logging.DEBUG)
 
 
 class DownFile:
@@ -34,9 +26,10 @@ class DownFile:
                         completeName = strPath+'/'+strName
                         
                 else:
-                        completeName = strPath+strName
+                        completeName = strPath+'_'+strName
                 with open(completeName, "w" ,encoding='utf-8') as file:
                         file.write(html)
+                        print('저장 완료된 파일 : '+completeName)
         
 
 
@@ -51,7 +44,8 @@ class DownFile:
                         
         #urllib.request.urlretrieve(strUrl, strPath+'/'+strName)
                 else:
-                        completeName = strPath+strName
+                        completeName = strPath+'_'+strName
 
                 urllib.request.urlretrieve(strUrl, completeName)
+                print('저장 완료된 파일 : '+completeName)
         
